@@ -1,12 +1,28 @@
 var player = 0
+var linha; var coluna;
 var divisoria = [" |\n  ------------\n  | "];
 var matriz =
 [
-    linha1 = ["1","2","3"],
-    linha2 = ["4","5","6"],
-    linha3 = ["7","8","9"]
-]
+    linha1 = [1,2,3],
+    linha2 = [4,5,6],
+    linha3 = [7,8,9]
+];
 var tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
+
+function NumeroJogada()
+{
+    switch (tentativa) 
+    {
+        case 1: linha = 0, coluna = 0; break; case 4: linha = 1, coluna = 0; break; case 7: linha = 2, coluna = 0; break;
+        case 2: linha = 0, coluna = 1; break; case 5: linha = 1, coluna = 1; break; case 8: linha = 2, coluna = 1; break;
+        case 3: linha = 0, coluna = 2; break; case 6: linha = 1, coluna = 2; break; case 9: linha = 2, coluna = 2; break;
+    }
+}
+
+function FinalJogo()
+{
+    
+}
 
 for (q = 0; q < 9 || win != 1; q++)
 {
@@ -18,49 +34,25 @@ for (q = 0; q < 9 || win != 1; q++)
     {
         simbolo = "O"
     }
-    player += 1
     tentativa = Number(prompt(tela + "\nEscolha um espaço livre colocando o número:"))
+    NumeroJogada();
     if (tentativa > 0 && tentativa < 10)
-    {
-        if (tentativa < 4)
+    {   
+        if (matriz[linha][coluna] != "X" && matriz[linha][coluna] != "O")
         {
-            if (matriz[0][tentativa - 1] != "X" && matriz[0][tentativa - 1] != "O")
-            {
-                matriz[0][tentativa - 1] = simbolo
-            }
-            else
-            {
-                alert("Este espaço não está livre, tente de novo outro!")
-                q -= 1
-                player -= 1
-            }
-        }
-        else if (tentativa < 7)
-        {
-            if (matriz[1][tentativa - 1] != "X" && matriz[1][tentativa - 1] != "O")
-            {
-                matriz[1][tentativa - 1] = simbolo
-            }
-            else
-            {
-                alert("Este espaço não está livre, tente de novo outro!")
-                q -= 1
-                player -= 1
-            }
+            matriz[linha][coluna] = simbolo;
+            player += 1
         }
         else
         {
-            if (matriz[2][tentativa - 1] != "X" && matriz[2][tentativa - 1] != "O")
-            {
-                matriz[2][tentativa - 1] = simbolo
-            }
-            else
-            {
-                alert("Este espaço não está livre, tente de novo outro!")
-                q -= 1
-                player -= 1
-            }
+            alert("Este espaço não está livre, tente de novo outro!");
+            q -= 1;
         }
+    }
+    else
+    {
+        alert("Este espaço não existe, tente de novo um que esteja na tela!");
+        q -= 1;
     }
     tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
 }
