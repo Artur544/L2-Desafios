@@ -1,9 +1,4 @@
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const prompt = require('prompt-sync') ();
 
 var player = 0
 var linha; var coluna;
@@ -41,10 +36,9 @@ for (q = 0; q < 9; q++)
     {
         simbolo = "O"
     }
-    //tentativa = Number(prompt(tela + "\nEscolha um espaço livre colocando o número:"))
-    rl.question(tela + "\nEscolha um espaço livre colocando o número:", function(tentativa1) 
+    tentativa = Number(prompt(tela + "\nEscolha um espaço livre colocando o número:")) 
     {
-        tentativa == tentativa1
+        // tentativa == tentativa1
         NumeroJogada();
         if (tentativa > 0 && tentativa < 10)
         {   
@@ -65,6 +59,6 @@ for (q = 0; q < 9; q++)
             q -= 1;
         }
         tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
-    })
+    }
 }
 console.log("Empate")
