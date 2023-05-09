@@ -1,5 +1,6 @@
 const prompt = require('prompt-sync') ();
 
+var linha_certa; var coluna_certa; var diagonal_certa;
 var player = 0
 var linha; var coluna;
 var divisoria = [" |\n  ------------\n  | "];
@@ -23,7 +24,47 @@ function NumeroJogada()
 
 function FinalJogo()
 {
-    
+    for (c = 0; c < 3 || linha_certa == true; c++)
+    {
+        if (matriz[linha][coluna] == matriz[linha][c])
+        {
+            linha_certa = true;
+        }
+        else
+        {
+            linha_certa = false;
+        }
+    }
+    if (linha_certa == true)
+    {
+        return linha_certa;
+    }
+    else
+    {
+        for (l = 0; l < 3 || coluna_certa == true; l++)
+        {
+            if (matriz[linha][coluna] == matriz[l][coluna])
+            {
+                coluna_certa = true;
+            }
+            else
+            {
+                coluna_certa = false;
+            }
+        }
+        if (coluna_certa == true)
+        {
+            return coluna_certa;
+        }
+        else
+        {
+            if ((matriz[0][0] == matriz[1][1] && matriz[0][0] == matriz[2][2]) || (matriz[0][2] == matriz[1][1] && matriz[0][2] == matriz[2][0]))
+            {
+                diagonal_certa = true;
+                return diagonal_certa;
+            }
+        }
+    }    
 }
 
 for (q = 0; q < 9; q++)
@@ -36,29 +77,31 @@ for (q = 0; q < 9; q++)
     {
         simbolo = "O"
     }
-    tentativa = Number(prompt(tela + "\nEscolha um espaço livre colocando o número:")) 
-    {
-        // tentativa == tentativa1
-        NumeroJogada();
-        if (tentativa > 0 && tentativa < 10)
-        {   
-            if (matriz[linha][coluna] != "X" && matriz[linha][coluna] != "O")
-            {
-                matriz[linha][coluna] = simbolo;
-                player += 1
-            }
-            else
-            {
-                console.log("Este espaço não está livre, tente de novo outro!");
-                q -= 1;
-            }
+    tentativa = Number(prompt(tela + "\n Jogador " + simbolo + " escolha um espaço livre colocando o número:"))
+    NumeroJogada();
+    if (tentativa > 0 && tentativa < 10)
+    {   
+        if (matriz[linha][coluna] != "X" && matriz[linha][coluna] != "O")
+        {
+            matriz[linha][coluna] = simbolo;
+            player += 1
         }
         else
         {
-            console.log("Este espaço não existe, tente de novo um que esteja na tela!");
+            console.log("Este espaço não está livre, tente de novo outro!");
             q -= 1;
         }
-        tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
+    }
+    else
+    {
+        console.log("Este espaço não existe, tente de novo um que esteja na tela!");
+        q -= 1;
+    }
+    tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
+    FinalJogo();
+    if (linha_certa == true || coluna_certa == true || diagonal_certa == true)
+    {
+        console.log("Parabéns, o jogador " + simbolo + " venceu!")
     }
 }
-console.log("Empate")
+console.log("Que pena, parece que houve um empate")
