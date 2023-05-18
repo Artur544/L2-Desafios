@@ -25,7 +25,7 @@ function NumeroJogada()
 
 function FinalJogo()
 {
-    for (c = 0; c < 3 && linha_certa == true; c++)
+    for (c = 2; c >= 0 && linha_certa == false; c--)
     {
         if (matriz[linha][coluna] == matriz[linha][c])
         {
@@ -34,41 +34,39 @@ function FinalJogo()
         else
         {
             linha_certa = false;
+            for (l = 0; l < 3 && coluna_certa == false; l++)
+            {
+                if (matriz[linha][coluna] == matriz[l][coluna])
+                {
+                    coluna_certa = true;
+                }
+                else
+                {
+                    coluna_certa = false;
+                    if (coluna_certa == false)
+                    {
+                        if ((matriz[0][0] == matriz[1][1] && matriz[0][0] == matriz[2][2]) || (matriz[0][2] == matriz[1][1] && matriz[0][2] == matriz[2][0]))
+                        {
+                            diagonal_certa = true;
+                        }
+                        else
+                        {
+                            diagonal_certa = false;
+                            win = false;
+                        }
+                    }
+                }
+            }
         }
     }
-    if (linha_certa == true)
+    if (linha_certa == true || coluna_certa == true || diagonal_certa == true)
     {
-        return linha_certa;
+        win = true;
     }
-    else
-    {
-        for (l = 0; l < 3 && coluna_certa == true; l++)
-        {
-            if (matriz[linha][coluna] == matriz[l][coluna])
-            {
-                coluna_certa = true;
-            }
-            else
-            {
-                coluna_certa = false;
-            }
-        }
-        if (coluna_certa == true)
-        {
-            return coluna_certa;
-        }
-        else
-        {
-            if ((matriz[0][0] == matriz[1][1] && matriz[0][0] == matriz[2][2]) || (matriz[0][2] == matriz[1][1] && matriz[0][2] == matriz[2][0]))
-            {
-                diagonal_certa = true;
-                return diagonal_certa;
-            }
-        }
-    }    
+    return win;
 }
 
-for (q = 0; q < 9 || win == false ; q++)
+for (q = 0; q < 9 && win == false ; q++)
 {
     if (player % 2 == 0)
     {
@@ -86,6 +84,7 @@ for (q = 0; q < 9 || win == false ; q++)
         {
             matriz[linha][coluna] = simbolo;
             player += 1;
+            FinalJogo();
         }
         else
         {
@@ -99,11 +98,12 @@ for (q = 0; q < 9 || win == false ; q++)
         q -= 1;
     }
     tela = ("  | ") + linha1.join(" | ") + divisoria + linha2.join(" | ") + divisoria + linha3.join(" | ") + (" |");
-    FinalJogo();
-    if (linha_certa == true || coluna_certa == true || diagonal_certa == true)
+    if (win == true)
     {
-        console.log("Parabéns, o jogador " + simbolo + " venceu!");
-        win = true;
+        console.log(tela + "\n Parabéns, o jogador " + simbolo + " venceu!");
     }
 }
-console.log("Que pena, parece que houve um empate");
+if (q == 9)
+{
+    console.log(tela + "\n Que pena, parece que houve um empate");
+}
